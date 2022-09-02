@@ -15,7 +15,6 @@ public class App {
         Scanner scan = new Scanner(System.in);
 
         while (appRunning) {
-            
 
             printMenu();
             System.out.println("Enter your choice:");
@@ -25,28 +24,27 @@ public class App {
                 case 0:
                     appRunning = false;
                     break;
-                case 1: //Classic
+                case 1: // Classic
                     playGame("classic", boardSize);
                     break;
                 case 2:
-                    playGame("pyramid",boardSize );
-                break;
+                    playGame("pyramid", boardSize);
+                    break;
                 case 3:
                     System.out.print("Enter new board size: ");
                     int newSize = scan.nextInt();
                     if (newSize > 16) {
                         System.out.println("Board can be 16 cells maximum");
-                    } else if(newSize < 3) {
+                    } else if (newSize < 3) {
                         System.out.println("Board must be at least 3 cells big");
-                    }
-                    else {
+                    } else {
                         System.out.println("New board size set to " + newSize);
                         boardSize = newSize;
 
                     }
-                    
+
             }
-            
+
         }
 
     }
@@ -56,7 +54,7 @@ public class App {
         Scanner scan = new Scanner(System.in);
 
         printBoard(game);
-        
+
         while (game.getRunning()) {
 
             System.out.println(game.getActivePlayer() + "'s turn");
@@ -75,26 +73,32 @@ public class App {
                 break;
             }
 
-            //Select returns true if selection successfull
-            if(game.select(select1, select2)) {
-                
+            // Select returns true if selection successfull
+            if (game.select(select1, select2)) {
+
                 printBoard(game);
 
                 if (game.getWinner() != ' ') {
-                
+
                     System.out.println(game.getWinner() + "'s' win!");
-                    
+
                     System.out.println("Enter any character to continue.");
                     scan.next();
                     game.quit();
                 }
             } else {
                 System.out.println("Please make a valid selection");
-                
+
+            }
+
+            if (game.isStalemate()) {
+                System.out.println("Stalemate!");
+                System.out.println("Enter any character to continue.");
+                scan.next();
+                game.quit();
             }
 
         }
-
 
     }
 

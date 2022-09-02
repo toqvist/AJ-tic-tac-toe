@@ -192,7 +192,7 @@ public class Game {
                      xCDiag++;
                  }
  
-                 if (grid[size - 11][size - 1 - i] == 'O') {
+                 if (grid[size - 1][size - 1 - i] == 'O') {
                      oCDiag++;
                  }
              }
@@ -204,7 +204,17 @@ public class Game {
         if (oDiag >= winningNumber || oCDiag >= winningNumber) {
             setWinner('O');
         }
+    }
 
+    public boolean isStalemate () {
+        for (int y = 0; y < grid.length; y++) {
+            for (int x = 0; x < grid.length; x++) {
+                if(grid[y][x] == ' ') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public char[][] getGrid() {
