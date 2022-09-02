@@ -20,6 +20,8 @@ public class Game {
         this.mode = mode;
         this.size = size;
 
+        activePlayer = randomPlayer();
+
         switch (mode) {
             case "classic":
                 winningNumber = size;
@@ -84,6 +86,13 @@ public class Game {
                 break;
         }
 
+    }
+
+    private char randomPlayer() {
+        if (Math.round(Math.random()*2) > 1) {
+            return 'O';
+        }
+        return 'X';
     }
 
     private void setWinner(char player) {
