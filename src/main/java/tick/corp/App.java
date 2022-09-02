@@ -26,7 +26,7 @@ public class App {
         Game gamePyramid = new Game("pyramid", 3);
 
         printBoard(gameClassic);
-        //printBoard(gamePyramid);
+        printBoard(gamePyramid);
     }
 
     private void printMenu() {
@@ -41,28 +41,27 @@ public class App {
         char[][] grid = game.getGrid();
 
         int lastRowLength = grid[grid.length - 1].length;
+        System.out.println(lastRowLength);
 
+        // If columns are fewer than rows, center the first row
+        // if (lastRowLength != grid[0].length)
+        
         // Print row numbers
         System.out.print("    ");
-        // If columns are fewer than rows, center the first row
-        if (lastRowLength != grid[0].length) {
-            // Print spacers for the asymetric grid rows
-            for (int x = 0; x < lastRowLength - x + 1; x++) {
-                System.out.print("   ");
-            }
 
-            for (int x = 0; x < grid.length; x++) {
-                System.out.print(x + "   ");
-            }
-
-        } else {
-            for (int x = 0; x < grid[0].length; x++) {
-                System.out.print(x + "   ");
-            }
+        for (int x = 0; x < lastRowLength; x++) {
+            System.out.print(x + "   ");
         }
 
         System.out.println();
 
+        //Spacer for asymmetric grid
+        if (lastRowLength != grid[0].length) {
+            for(int j=0;j<lastRowLength-grid[0].length ;j++) {
+                System.out.print("  ");
+            }   
+        }
+        
         // Print divider
         System.out.print("   ");
         for (int i = 0; i < grid[0].length; i++) {
@@ -74,15 +73,34 @@ public class App {
         // Print grid with lines and values
         for (int y = 0; y < grid.length; y++) {
 
-            System.out.print(y + " | ");
+            System.out.print(y);
 
-            for (int x = 0; x < grid.length; x++) {
+            //Spacer if asymmetric grid
+            if (lastRowLength != grid[0].length) {
+                for(int i=0;i<lastRowLength-grid[y].length ;i++) {
+                    System.out.print("  ");
+                }
+            }
+
+            //Left border
+            System.out.print(" | ");
+
+            //Cells
+            for (int x = 0; x < grid[y].length; x++) {
                 System.out.print(grid[y][x] + " | ");
             }
             System.out.println();
             System.out.print("   ");
 
+            //Spacer for asymmetric grid
+            if (lastRowLength != grid[0].length) {
+                for(int j=0;j<lastRowLength-grid[y].length ;j++) {
+                    System.out.print("  ");
+                }   
+            }
+
             for (int i = 0; i < grid[y].length; i++) {
+
                 System.out.print("————");
             }
 
