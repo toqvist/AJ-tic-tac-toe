@@ -27,7 +27,7 @@ public class Game {
                     this.grid[y] = new char[size];
 
                     for (int x = 0; x < grid[y].length; x++) {
-                        this.grid[y][x] = '0';
+                        this.grid[y][x] = ' ';
                     }
 
                 }
@@ -39,14 +39,15 @@ public class Game {
                 this.grid = new char[size][];
                 this.grid[0] = new char[] { ' ' };
 
+                int x = 2;
                 for (int y = 1; y < size; y++) {
 
-                    this.grid[y] = new char[size + 2];
+                    this.grid[y] = new char[y + x];
 
-                    for (int x = 0; x < grid[y].length; x++) {
-                        this.grid[y][x] = ' ';
+                    for (int i = 0; i < grid[y].length; i++) {
+                        this.grid[y][i] = ' ';
                     }
-
+                    x++;
                 }
                 break;
         }
@@ -63,7 +64,6 @@ public class Game {
     // }
     // }
     // }
-
 
     public char[][] getGrid() {
         return this.grid;
