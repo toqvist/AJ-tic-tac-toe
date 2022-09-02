@@ -41,9 +41,8 @@ public class App {
         Scanner scan = new Scanner(System.in);
 
         printBoard(game);
+        
         while (game.getRunning()) {
-
-            
 
             System.out.println(game.getActivePlayer() + "'s turn");
             System.out.println("Enter Y: ");
@@ -101,13 +100,6 @@ public class App {
 
         System.out.println();
 
-        // Spacer for asymmetric grid
-        if (lastRowLength != grid[0].length) {
-            for (int j = 0; j < lastRowLength - grid[0].length; j++) {
-                System.out.print("  ");
-            }
-        }
-
         // Print divider
         System.out.print("   ");
         for (int i = 0; i < grid[0].length; i++) {
@@ -121,13 +113,6 @@ public class App {
 
             System.out.print(y);
 
-            // Spacer if asymmetric grid
-            if (lastRowLength != grid[0].length) {
-                for (int i = 0; i < lastRowLength - grid[y].length; i++) {
-                    System.out.print("  ");
-                }
-            }
-
             // Left border
             System.out.print(" | ");
 
@@ -137,13 +122,6 @@ public class App {
             }
             System.out.println();
             System.out.print("   ");
-
-            // Spacer for asymmetric grid
-            if (lastRowLength != grid[0].length) {
-                for (int j = 0; j < lastRowLength - grid[y].length; j++) {
-                    System.out.print("  ");
-                }
-            }
 
             for (int i = 0; i < grid[y].length; i++) {
 

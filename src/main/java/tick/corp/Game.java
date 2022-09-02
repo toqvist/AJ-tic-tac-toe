@@ -11,7 +11,7 @@ public class Game {
     private boolean running = true;
     private char activePlayer = 'X';
     private String winner = "";
-    
+
     /**
      * @param mode
      */
@@ -24,14 +24,14 @@ public class Game {
             case "classic":
                 winningNumber = size;
 
-                this.grid = new char[size][];
+                grid = new char[size][];
 
                 for (int y = 0; y < size; y++) {
 
-                    this.grid[y] = new char[size];
+                    grid[y] = new char[size];
 
                     for (int x = 0; x < grid[y].length; x++) {
-                        this.grid[y][x] = ' ';
+                        grid[y][x] = ' ';
                     }
 
                 }
@@ -40,18 +40,46 @@ public class Game {
             case "pyramid":
                 winningNumber = size;
 
-                this.grid = new char[size][];
-                this.grid[0] = new char[] { ' ' };
+                grid = new char[size][];
+                // grid[0] = new char[] { ' ' };
 
-                int x = 2;
+                int xMax = 0;
+                int xIncrement = 2;
                 for (int y = 1; y < size; y++) {
+                    xMax += xIncrement;
+                    xIncrement++;
+                }
 
-                    this.grid[y] = new char[y + x];
+                // Initialize values
+                for (int y = 0; y < size; y++) {
+                    grid[y] = new char[xMax];
 
-                    for (int i = 0; i < grid[y].length; i++) {
-                        this.grid[y][i] = ' ';
+                    for (int x = 0; x < grid[y].length; x++) {
+
+                        grid[y][x] = ' ';
+
                     }
-                    x++;
+                }
+
+                int middle = xMax / 2 ;
+
+                //Put in blockers
+                for (int y = 0; y < size; y++) {
+
+                    int lowerBound = middle - y;
+                    int higherBound = middle + y;
+
+                    for (int x = 0; x < grid[y].length; x++) {
+
+                        if (x < lowerBound) {
+                            grid[y][x] = '#';
+                        }
+
+                        if (x > higherBound) {
+                            grid[y][x] = '#';
+                        }
+
+                    }
                 }
                 break;
         }
@@ -69,14 +97,13 @@ public class Game {
     // }
     // }
 
-    private void checkWinner () {
-        
+    private void checkWinner() {
+
     }
 
     public char[][] getGrid() {
         return this.grid;
     }
-
 
     public boolean getRunning() {
         return this.running;
@@ -94,29 +121,23 @@ public class Game {
         this.running = false;
     }
 
-    public boolean select (String select1, String select2) {
-        
+    public boolean select(String select1, String select2) {
+
         int s1 = Integer.parseInt(select1);
         int s2 = Integer.parseInt(select2);
-        
-        if (mode == "pyramid") {
-            System.out.println(s2);
-            s2 = grid[s1].length + 1 - s2;
-            System.out.println(s2);
-        }
 
-        //Check for out of bounds
-        if (s1 >= grid.length || s1 < 0 ||
-            s2 >= grid.length || s2 < 0 ) {
+        // Check for out of bounds
+        if (s1 >= grid[0].length || s1 < 0 ||
+            s2 >= grid[0].length || s2 < 0) {
             return false;
         }
 
-        if(grid[s1][s2] == ' ') {
+        if (grid[s1][s2] == ' ') {
 
-            //Active player is represented by their symbol
+            // Active player is represented by their symbol
             grid[s1][s2] = activePlayer;
             checkWinner();
-            
+
             if (activePlayer == 'X') {
                 activePlayer = 'O';
             } else {
@@ -128,4 +149,3 @@ public class Game {
         return false;
     }
 }
-    
