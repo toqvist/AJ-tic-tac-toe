@@ -10,7 +10,7 @@ public class Game {
 
     private boolean running = true;
     private char activePlayer = 'X';
-    private String winner = "";
+    private char winner = ' ';
 
     /**
      * @param mode
@@ -61,9 +61,9 @@ public class Game {
                     }
                 }
 
-                int middle = xMax / 2 ;
+                int middle = xMax / 2;
 
-                //Put in blockers
+                // Put in blockers
                 for (int y = 0; y < size; y++) {
 
                     int lowerBound = middle - y;
@@ -86,18 +86,124 @@ public class Game {
 
     }
 
-    // public boolean checkAdjecents(int player) {
-
-    // int adjacents = 0;
-
-    // for (int y = 0; y < grid.length; y++) {
-    // for (int x = 0; x < grid[y].length; x++) {
-    // if(grid[y][x] == grid[y+1][x])
-    // }
-    // }
-    // }
+    private void setWinner(char player) {
+        winner = player;
+    }
 
     private void checkWinner() {
+
+        // Check rows
+        for (int y = 0; y < grid.length; y++) {
+            int xRows = 0;
+            int oRows = 0;
+
+            for (int x = 0; x < grid[y].length; x++) {
+
+                if (grid[y][x] == 'X') {
+                    xRows++;
+                }
+
+                if (grid[y][x] == 'O') {
+                    oRows++;
+                }
+
+            }
+            if (xRows >= winningNumber) {
+                setWinner('X');
+            }
+
+            if (oRows >= winningNumber) {
+                setWinner('O');
+            }
+        }
+
+        // //Check columns
+        for (int x = 0; x < grid[0].length; x++) {
+            int xCols = 0;
+            int oCols = 0;
+
+            for (int y = 0; y < grid.length; y++) {
+
+                if (grid[y][x] == 'X') {
+                    xCols++;
+                }
+
+                if (grid[y][x] == 'O') {
+                    oCols++;
+                }
+
+            }
+            if (xCols >= winningNumber) {
+                setWinner('X');
+            }
+
+            if (oCols >= winningNumber) {
+                setWinner('O');
+            }
+        }
+
+        int xDiag = 0;
+        int xCDiag = 0;
+        int oDiag = 0;
+        int oCDiag = 0;
+
+        // Check diagonally and counter-diagonally
+        if (mode == "pyramid") {
+            // Diag
+            int middle = grid[0].length / 2;
+          
+            for (int i = 0; i < size; i++) {
+
+                // Diagonally
+                if (grid[i][middle + i] == 'X') {
+                    xDiag++;
+                }
+
+                if (grid[i][middle + i] == 'O') {
+                    oDiag++;
+                }
+
+                // Counter-diagonally
+                if (grid[i][middle - i] == 'X') {
+                    xCDiag++;
+                }
+
+                if (grid[i][middle - i] == 'O') {
+                    oCDiag++;
+                }
+
+            }
+        } else {
+        
+            for (int i = 0; i < size; i++) {
+                
+                // Diagonally
+                 if (grid[i][i] == 'X') {
+                     xDiag++;
+                 }
+ 
+
+                 if (grid[i][i] == 'O') {
+                    oDiag++;
+                }
+
+                // Counter-diagonally
+                 if (grid[size - 1][size - 1 - i] == 'X') {
+                     xCDiag++;
+                 }
+ 
+                 if (grid[size - 11][size - 1 - i] == 'O') {
+                     oCDiag++;
+                 }
+             }
+        }
+        if (xDiag >= winningNumber || xCDiag >= winningNumber) {
+            setWinner('X');
+        }
+
+        if (oDiag >= winningNumber || oCDiag >= winningNumber) {
+            setWinner('O');
+        }
 
     }
 
@@ -109,7 +215,7 @@ public class Game {
         return this.running;
     }
 
-    public String getWinner() {
+    public char getWinner() {
         return this.winner;
     }
 
@@ -128,7 +234,7 @@ public class Game {
 
         // Check for out of bounds
         if (s1 >= grid[0].length || s1 < 0 ||
-            s2 >= grid[0].length || s2 < 0) {
+                s2 >= grid[0].length || s2 < 0) {
             return false;
         }
 

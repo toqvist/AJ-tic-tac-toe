@@ -10,11 +10,12 @@ public class App {
 
     public static void main(String[] args) {
 
+        int boardSize = 3;
         boolean appRunning = true;
         Scanner scan = new Scanner(System.in);
 
         while (appRunning) {
-
+            
 
             printMenu();
             System.out.println("Enter your choice:");
@@ -25,11 +26,25 @@ public class App {
                     appRunning = false;
                     break;
                 case 1: //Classic
-                    playGame("classic", 3);
+                    playGame("classic", boardSize);
                     break;
                 case 2:
-                    playGame("pyramid",3 );
+                    playGame("pyramid",boardSize );
                 break;
+                case 3:
+                    System.out.print("Enter new board size: ");
+                    int newSize = scan.nextInt();
+                    if (newSize > 16) {
+                        System.out.println("Board can be 16 cells maximum");
+                    } else if(newSize < 3) {
+                        System.out.println("Board must be at least 3 cells big");
+                    }
+                    else {
+                        System.out.println("New board size set to " + newSize);
+                        boardSize = newSize;
+
+                    }
+                    
             }
             
         }
@@ -47,10 +62,15 @@ public class App {
             System.out.println(game.getActivePlayer() + "'s turn");
             System.out.println("Enter Y: ");
             String select1 = scan.next();
+
+            if (select1.equals("quit")) {
+                game.quit();
+                break;
+            }
             System.out.println("Enter X: ");
             String select2 = scan.next();
 
-            if (select1 == "quit" || select2 == "quit") {
+            if (select1.equals("quit") || select2.equals("quit")) {
                 game.quit();
                 break;
             }
@@ -60,11 +80,11 @@ public class App {
                 
                 printBoard(game);
 
-                if (game.getWinner() != "") {
+                if (game.getWinner() != ' ') {
                 
                     System.out.println(game.getWinner() + "'s' win!");
                     
-                    System.out.println("Press any key to continue.");
+                    System.out.println("Enter any character to continue.");
                     scan.next();
                     game.quit();
                 }
@@ -83,6 +103,7 @@ public class App {
         System.out.println("[0] - Exit game");
         System.out.println("[1] - Play classic mode");
         System.out.println("[2] - Play pyramid mode");
+        System.out.println("[3] - Change board size");
     }
 
     private static void printBoard(Game game) {
