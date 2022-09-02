@@ -8,6 +8,10 @@ public class Game {
     private int winningNumber;
     private int size;
 
+    private boolean running = true;
+    private char activePlayer = 'X';
+    private String winner = "";
+    
     /**
      * @param mode
      */
@@ -65,8 +69,63 @@ public class Game {
     // }
     // }
 
+    private void checkWinner () {
+        
+    }
+
     public char[][] getGrid() {
         return this.grid;
     }
 
+
+    public boolean getRunning() {
+        return this.running;
+    }
+
+    public String getWinner() {
+        return this.winner;
+    }
+
+    public char getActivePlayer() {
+        return this.activePlayer;
+    }
+
+    public void quit() {
+        this.running = false;
+    }
+
+    public boolean select (String select1, String select2) {
+        
+        int s1 = Integer.parseInt(select1);
+        int s2 = Integer.parseInt(select2);
+        
+        if (mode == "pyramid") {
+            System.out.println(s2);
+            s2 = grid[s1].length + 1 - s2;
+            System.out.println(s2);
+        }
+
+        //Check for out of bounds
+        if (s1 >= grid.length || s1 < 0 ||
+            s2 >= grid.length || s2 < 0 ) {
+            return false;
+        }
+
+        if(grid[s1][s2] == ' ') {
+
+            //Active player is represented by their symbol
+            grid[s1][s2] = activePlayer;
+            checkWinner();
+            
+            if (activePlayer == 'X') {
+                activePlayer = 'O';
+            } else {
+                activePlayer = 'X';
+            }
+
+            return true;
+        }
+        return false;
+    }
 }
+    
